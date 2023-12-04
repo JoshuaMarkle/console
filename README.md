@@ -44,3 +44,7 @@ git
 - Timezone: (whatever you want)
 - Automatic Time Sync (NTP): True
 - Optional Repositories: None
+
+## References
+
+- Fonts are from [TakWolf/retro-pixel-font](https://github.com/TakWolf/retro-pixel-font/)
