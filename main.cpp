@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_keycode.h>
 #include <iostream>
 #include <string>
 
@@ -68,19 +69,30 @@ int main(int argc, char* argv[]) {
 	SDL_Color textColor = {255, 255, 255, 255};
 
 	// Load text texture
-	SDL_Texture *textTexture = renderText("Josh is the best", "./fonts/arcade.ttf", textColor, 24, renderer);
+	SDL_Texture *textTexture = renderText("Josh is the best", "./fonts/arcade.ttf", textColor, 12, renderer);
+
+	// Start a timer
+	Uint32 startTime = SDL_GetTicks();
 
 	// Event loop
-	SDL_Event e;
+	SDL_Event event;
 	bool quit = false;
 	while (!quit) {
-		while (SDL_PollEvent(&e)) {
-			if (e.type == SDL_QUIT) {
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
 				quit = true;
+			} else if (event.type == SDL_KEYDOWN) {
+				// Exit on the Esc key
+				quit = true;
+				if (event.key.keysym.sym == SDLK_ESCAPE) {
+					quit = true;
+				}
 			}
+		}
 
-			// Button clicks here
-
+		// Quit after 5 seconds (5000 milliseconds)
+		if (SDL_GetTicks() - startTime > 5000) {
+			quit = true;
 		}
 
 		// Clear screen
