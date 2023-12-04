@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 	SDL_Color textColor = {255, 255, 255, 255};
 
 	// Load text texture
-	SDL_Texture *textTexture = renderText("Josh is the best", "./fonts/arcade.ttf", textColor, 12, renderer);
+	SDL_Texture *textTexture = renderText("Josh is the best", "assets/fonts/arcade.ttf", textColor, 12, renderer);
 
 	// Start a timer
 	Uint32 startTime = SDL_GetTicks();
@@ -83,7 +83,6 @@ int main(int argc, char* argv[]) {
 				quit = true;
 			} else if (event.type == SDL_KEYDOWN) {
 				// Exit on the Esc key
-				quit = true;
 				if (event.key.keysym.sym == SDLK_ESCAPE) {
 					quit = true;
 				}
