@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Create Window
-	SDL_Window *window = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+	SDL_Window *window = SDL_CreateWindow("Hello World!", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == nullptr) {
 		std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
 		SDL_Quit();
@@ -65,16 +65,12 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
-	// Set text color
-	SDL_Color textColor = {255, 255, 255, 255};
-
 	// Load text texture
-	SDL_Texture *textTexture = renderText("Josh is the best", "assets/fonts/arcade.ttf", textColor, 12, renderer);
-
-	// Start a timer
-	Uint32 startTime = SDL_GetTicks();
+	SDL_Color textColor = {255, 255, 255, 255};
+	SDL_Texture *textTexture = renderText("my favorite text", "assets/fonts/arcade.ttf", textColor, 12, renderer);
 
 	// Event loop
+	Uint32 startTime = SDL_GetTicks();
 	SDL_Event event;
 	bool quit = false;
 	while (!quit) {

@@ -4,7 +4,7 @@ This is a list of instructions to setup **Untitled Game Console**
 
 The console is built on Arch because why not?
 
-### Getting Started With Arch
+### Instructions For Creating An ISO
 
 To install Arch, will we need to do archinstall, nothing super specific and this works good enough.
 

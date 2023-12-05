@@ -1,8 +1,14 @@
+SDL_PATH = lib/SDL/include #/usr/include/SDL2
+
 # Compiler Settings
-CC=g++
-CFLAGS=-Iinclude/SDL/include -Linclude/SDL/lib -lSDL2 -lSDL2_ttf
-SRC=./src/main/main.cpp
-EXEC=game
+CC = g++
+
+CFLAGS  = -I$(SDL_PATH)
+# CFLAGS += -lSDL3
+# CFLAGS += -lSDL3_ttf
+
+SRC  = src/main/main.cpp
+EXEC = bin/game
 
 all: clean build check run
 
