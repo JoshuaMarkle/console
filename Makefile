@@ -20,7 +20,6 @@ all: clean build check run
 
 # Clean Away Old Executables
 clean:
-	@echo "Cleaning..."
 	rm -f $(EXEC)
 
 # Build The Executable
@@ -31,7 +30,6 @@ build:
 
 # Check For Errors
 check:
-	@echo "Checking For Errors..."
 	@if [ -s build.log ]; then \
 		echo "Build Warnings/Errors Detected:" \
 		echo | cat build.log; \
@@ -42,8 +40,6 @@ check:
 
 # Run The Game
 run:
-	@echo "Running Game..."
-	@echo "Sudo Privliges Required!"
 	@sudo ./$(EXEC)
 
 .PHONY: clean build check run

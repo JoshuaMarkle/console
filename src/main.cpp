@@ -15,9 +15,11 @@ int main(int argc, char* args[]) {
 	SceneRenderer sceneRenderer(renderer);
 
 	// Create cube
-	Object cube = OBJLoader::Load("assets/cube.obj");
+	Object cube = OBJLoader::Load("assets/models/cube.obj");
+	cube.position = Vector3D(0, 0, 6); 
 
 	Uint32 lastTime = SDL_GetTicks(), currentTime;
+	float counter;
     float deltaTime;
 
     // Main loop
@@ -27,6 +29,7 @@ int main(int argc, char* args[]) {
 		currentTime = SDL_GetTicks();
 		deltaTime = (currentTime - lastTime) / 1000.0f;
 		lastTime = currentTime;
+		counter += deltaTime;
 
         // Handle events
         while (SDL_PollEvent(&e) != 0) {
@@ -40,6 +43,8 @@ int main(int argc, char* args[]) {
         renderer.ClearScreen();
 
 		// Render cube
+		cube.position.x = sin(counter);
+		cube.position.y = cos(counter);
 		sceneRenderer.RenderObject(cube);
 
         // Update the screen

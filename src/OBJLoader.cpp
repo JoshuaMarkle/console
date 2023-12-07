@@ -2,12 +2,19 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <iostream>
 
 Object OBJLoader::Load(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
     std::vector<Vector3D> vertices;
     std::vector<std::pair<int, int>> edges;
+
+	std::ifstream infile;
+	infile.open(filename);
+	if (!infile) {
+		std::cout << "Oops, I can't find the file" << std::endl;
+	}
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);

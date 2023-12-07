@@ -1,7 +1,7 @@
 #include "Object.h"
 
-Object::Object(std::vector<Vector3D> vertices)
-    : vertices(vertices), position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1) {}
+Object::Object(std::vector<Vector3D> vertices, std::vector<std::pair<int, int>> edges)
+	: vertices(vertices), edges(edges), position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1) {}
 
 std::vector<Vector3D> Object::GetTransformedVertices() const {
     std::vector<Vector3D> transformedVertices;
