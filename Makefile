@@ -6,12 +6,12 @@ CC = g++
 
 CFLAGS  = -I$(SDL_PATH)
 CFLAGS += -lSDL2
-CFLAGS += -lSDL2_ttf
-CFLAGS += ./src/MathUtil.cpp
-CFLAGS += ./src/Renderer.cpp
-CFLAGS += ./src/Object.cpp
-CFLAGS += ./src/SceneRenderer.cpp
-CFLAGS += ./src/OBJLoader.cpp
+# CFLAGS += -lSDL2_ttf
+CFLAGS += ./src/utils/MathUtil.cpp
+CFLAGS += ./src/utils/Object.cpp
+CFLAGS += ./src/utils/OBJLoader.cpp
+CFLAGS += ./src/renderer/Renderer.cpp
+CFLAGS += ./src/renderer/SceneRenderer.cpp
 
 SRC  = src/main.cpp
 EXEC = bin/game

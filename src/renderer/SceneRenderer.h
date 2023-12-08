@@ -2,7 +2,8 @@
 #define SCENERENDERER_H
 
 #include "Renderer.h"
-#include "Object.h"
+#include "../utils/Object.h"
+#include "../utils/MathUtil.h"
 
 class SceneRenderer {
 public:

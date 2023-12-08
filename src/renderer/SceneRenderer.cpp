@@ -1,12 +1,12 @@
 #include "SceneRenderer.h"
-#include "MathUtil.h"
+#include "../utils/Settings.h"
 
 SceneRenderer::SceneRenderer(Renderer& renderer) : renderer(renderer) {}
 
 void SceneRenderer::RenderObject(const Object& object) {
     // Create a projection matrix
-    float fov = 120.0f;
-    float aspectRatio = 800.0f / 600.0f;
+    float fov = 100.0f;
+    float aspectRatio = Settings::NES_WIDTH / Settings::NES_HEIGHT;
     Matrix4x4 projMatrix = CreateProjectionMatrix(fov, aspectRatio, 0.1f, 1000.0f);
 
     // Transform and project object vertices
@@ -22,8 +22,8 @@ void SceneRenderer::RenderObject(const Object& object) {
         }
 
         // Convert from 3D to 2D screen coordinates
-        int screenX = static_cast<int>((transformed.x + 1) * 0.5f * 800); // Window width
-        int screenY = static_cast<int>((1 - transformed.y) * 0.5f * 600); // Window height
+        int screenX = static_cast<int>((transformed.x + 1) * 0.5f * Settings::NES_WIDTH); // Window width
+        int screenY = static_cast<int>((1 - transformed.y) * 0.5f * Settings::NES_HEIGHT); // Window height
         projectedVertices.push_back(Vector3D(screenX, screenY, 0));
     }
 

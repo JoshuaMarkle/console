@@ -2,7 +2,7 @@
 #define RENDERER_H
 
 #include <SDL.h>
-#include "MathUtil.h"
+#include "../utils/MathUtil.h"
 
 class Renderer {
 public:
