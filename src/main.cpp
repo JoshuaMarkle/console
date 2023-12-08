@@ -26,40 +26,65 @@ int main(int argc, char* args[]) {
 		Settings::NES_WIDTH, 
 		Settings::NES_HEIGHT);
 
-    Renderer renderer(sdlRenderer);
-	SceneRenderer sceneRenderer(renderer);
+	// Create camera
+	Object camera = Object();
+	float cameraSpeed = 20.0f;
 
 	// Create cube
 	Object cube = OBJLoader::Load("assets/models/cube.obj");
-	cube.position = Vector3D(0, 0, 10); 
+	cube.position.z = 10; 
+
+	// Create Renderers
+    Renderer renderer(sdlRenderer);
+	SceneRenderer sceneRenderer(renderer, camera);
 
 	Uint32 lastTime = SDL_GetTicks(), currentTime;
-	float counter;
     float deltaTime;
+	float counter;
 
     // Main loop
     bool quit = false;
-    SDL_Event e;
+    SDL_Event event;
     while (!quit) {
 		currentTime = SDL_GetTicks();
 		deltaTime = (currentTime - lastTime) / 1000.0f;
 		lastTime = currentTime;
 		counter += deltaTime;
 
-        // Handle events
-        while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) {
-                quit = true;
-            }
-            // Handle other events like keyboard, mouse, etc.
-        }
+		// Handle events
+		while (SDL_PollEvent(&event) != 0) {
+			if (event.type == SDL_QUIT) {
+				quit = true;
+			} else if (event.type == SDL_KEYDOWN) {
+				switch (event.key.keysym.sym) {
+					case SDLK_w: // Move up
+						camera.position.y += cameraSpeed * deltaTime;
+						break;
+					case SDLK_s: // Move down
+						camera.position.y -= cameraSpeed * deltaTime;
+						break;
+					case SDLK_a: // Move left
+						camera.position.x -= cameraSpeed * deltaTime;
+						break;
+					case SDLK_d: // Move right
+						camera.position.x += cameraSpeed * deltaTime;
+						break;
+					case SDLK_q: // Move forwards
+						camera.position.z -= cameraSpeed * deltaTime;
+						break;
+					case SDLK_e: // Move backwards
+						camera.position.z += cameraSpeed * deltaTime;
+						break;
+				}
+			}
+			// Handle other events...
+		}
 
         // Clear the renderer
 		SDL_SetRenderTarget(sdlRenderer, nesTexture);
         renderer.ClearScreen();
 
-		// Render cube
-		// cube.position.y = cos(counter);
+		// Make the cube spin!
 		cube.rotation.x = counter * 100.0f;
 		cube.rotation.y = counter * 120.0f;
 		cube.rotation.z = counter * 140.0f;

@@ -7,12 +7,13 @@
 
 class SceneRenderer {
 public:
-    SceneRenderer(Renderer& renderer);
+    SceneRenderer(Renderer& renderer, Object& camera);
 
     void RenderObject(const Object& object);
 
 private:
     Renderer& renderer;
+	Object& camera;
 };
 
 #endif // SCENERENDERER_H

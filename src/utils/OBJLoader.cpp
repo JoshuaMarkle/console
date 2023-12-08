@@ -10,12 +10,14 @@ Object OBJLoader::Load(const std::string& filename) {
     std::vector<Vector3D> vertices;
     std::vector<std::pair<int, int>> edges;
 
+	// Check if the file exists
 	std::ifstream infile;
 	infile.open(filename);
 	if (!infile) {
-		std::cout << "Oops, I can't find the file" << std::endl;
+		std::cout << "Error: File not found (" << filename << ")" << std::endl;
 	}
 
+	// Parse the obj file
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         std::string prefix;

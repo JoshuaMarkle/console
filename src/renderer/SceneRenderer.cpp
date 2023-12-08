@@ -1,7 +1,8 @@
 #include "SceneRenderer.h"
 #include "../utils/Settings.h"
+#include <iostream>
 
-SceneRenderer::SceneRenderer(Renderer& renderer) : renderer(renderer) {}
+SceneRenderer::SceneRenderer(Renderer& renderer, Object& camera) : renderer(renderer), camera(camera) {}
 
 void SceneRenderer::RenderObject(const Object& object) {
     // Create a projection matrix
@@ -10,10 +11,16 @@ void SceneRenderer::RenderObject(const Object& object) {
     Matrix4x4 projMatrix = CreateProjectionMatrix(fov, aspectRatio, 0.1f, 1000.0f);
 
     // Transform and project object vertices
-    auto transformedVertices = object.GetTransformedVertices();
+    auto transformedVertices = object.GetVertices();
     std::vector<Vector3D> projectedVertices;
     for (const auto& vertex : transformedVertices) {
-        Vector3D transformed = Transform(vertex, projMatrix); 
+		// Offeset verties by the camera position
+		Vector3D offsetVertex = Vector3D(
+			vertex.x - camera.position.x,
+			vertex.y - camera.position.y,
+			vertex.z - camera.position.z);
+
+        Vector3D transformed = Transform(offsetVertex, projMatrix); 
 
         // Apply perspective division
         if (transformed.z != 0) {

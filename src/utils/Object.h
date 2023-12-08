@@ -8,8 +8,9 @@
 class Object {
 public:
     Object(std::vector<Vector3D> vertices, std::vector<std::pair<int, int>> edges);
+	Object();
 
-    std::vector<Vector3D> GetTransformedVertices() const;
+    std::vector<Vector3D> GetVertices() const;
 	const std::vector<std::pair<int, int>>& GetEdges() const;
 
     Vector3D position;
