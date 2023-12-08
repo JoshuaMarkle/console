@@ -59,8 +59,10 @@ int main(int argc, char* args[]) {
         renderer.ClearScreen();
 
 		// Render cube
-		cube.position.x = sin(counter);
-		cube.position.y = cos(counter);
+		// cube.position.y = cos(counter);
+		cube.rotation.x = counter * 100.0f;
+		cube.rotation.y = counter * 120.0f;
+		cube.rotation.z = counter * 140.0f;
 		sceneRenderer.RenderObject(cube);
 
         // Update the screen

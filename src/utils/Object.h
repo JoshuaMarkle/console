@@ -13,7 +13,7 @@ public:
 	const std::vector<std::pair<int, int>>& GetEdges() const;
 
     Vector3D position;
-    Vector3D rotation; // To be implemented later
+    Vector3D rotation;
     Vector3D scale;    // To be implemented later
 
 private:

@@ -24,7 +24,9 @@ public:
 
     void Translate(const Vector3D& v);
     void Scale(const Vector3D& v);
-    void RotateZ(float angle);  // Example rotation around Z-axis
+    void RotateX(float angle); 
+    void RotateY(float angle); 
+    void RotateZ(float angle); 
     // Other rotation functions can be added (RotateX, RotateY)
 };
 

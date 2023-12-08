@@ -1,5 +1,7 @@
 #include "MathUtil.h"
 
+const float PI = 3.1415926;
+
 // Vector3D Constructor
 Vector3D::Vector3D(float x, float y, float z) : x(x), y(y), z(z) {}
 
@@ -44,12 +46,40 @@ void Matrix4x4::Scale(const Vector3D& v) {
     m[2][2] = v.z;
 }
 
-// Matrix Rotation (around the Z-axis as an example)
+// Matrix Rotation X
+void Matrix4x4::RotateX(float angle) {
+	float rad = angle * PI / 180.0f;
+	float cosine = cos(rad), sine = sin(rad);
+	Matrix4x4 rotation;
+	rotation.m[1][1] = cosine;
+	rotation.m[1][2] = -sine;
+	rotation.m[2][1] = sine;
+	rotation.m[2][2] = cosine;
+	*this = MultiplyMatrix(*this, rotation);
+}
+
+// Matrix Rotation Y
+void Matrix4x4::RotateY(float angle) {
+	float rad = angle * PI / 180.0f;
+	float cosine = cos(rad), sine = sin(rad);
+	Matrix4x4 rotation;
+	rotation.m[0][0] = cosine;
+	rotation.m[0][2] = sine;
+	rotation.m[2][0] = -sine;
+	rotation.m[2][2] = cosine;
+	*this = MultiplyMatrix(*this, rotation);
+}
+
+// Matrix Rotation Z
 void Matrix4x4::RotateZ(float angle) {
-    float c = cos(angle);
-    float s = sin(angle);
-    m[0][0] = c; m[0][1] = -s;
-    m[1][0] = s; m[1][1] = c;
+	float rad = angle * PI / 180.0f;
+	float cosine = cos(rad), sine = sin(rad);
+	Matrix4x4 rotation;
+	rotation.m[0][0] = cosine;
+	rotation.m[0][1] = -sine;
+	rotation.m[1][0] = sine;
+	rotation.m[1][1] = cosine;
+	*this = MultiplyMatrix(*this, rotation);
 }
 
 // Multiply two matrices
