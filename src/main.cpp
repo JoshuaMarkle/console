@@ -28,10 +28,10 @@ int main(int argc, char* args[]) {
 
 	// Create camera
 	Object camera = Object();
-	float cameraSpeed = 20.0f;
+	float cameraSpeed = 200.0f;
 
 	// Create cube
-	Object cube = OBJLoader::Load("assets/models/cube.obj");
+	Object cube = OBJLoader::Load("assets/models/centered_cow.obj");
 	cube.position.z = 10; 
 
 	// Create Renderers
@@ -96,7 +96,7 @@ int main(int argc, char* args[]) {
         renderer.RenderPresent();
 
         // Delay for visibility
-        SDL_Delay(16); // ~60 frames per second
+        // SDL_Delay(16); // ~60 frames per second
     }
 
     // Clean up SDL
