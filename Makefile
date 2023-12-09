@@ -32,7 +32,7 @@ build:
 check:
 	@if [ -s build.log ]; then \
 		echo "Build Warnings/Errors Detected:" \
-		echo | cat build.log; \
+		echo | bat build.log; \
 		exit 1; \
 	else \
 		echo "Build Successful"; \

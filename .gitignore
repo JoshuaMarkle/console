@@ -1,2 +1,4 @@
 build.log
 /bin/*
+/assets/models/scripts/*
+!/assets/models/scripts/*.cpp
