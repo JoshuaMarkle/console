@@ -83,9 +83,10 @@ int main(int argc, char* args[]) {
         renderer.ClearScreen();
 
 		// Make the cube spin!
-		cube.rotation.x = counter * 100.0f;
-		cube.rotation.y = counter * 120.0f;
-		cube.rotation.z = counter * 140.0f;
+		float spinSpeed = 30;
+		cube.rotation.x = counter * spinSpeed;
+		cube.rotation.y = counter * spinSpeed * 2;
+		cube.rotation.z = counter * spinSpeed * 3;
 		renderer.RenderObject(cube);
 
         // Update the screen

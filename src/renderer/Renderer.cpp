@@ -49,47 +49,10 @@ void Renderer::RenderObject(const Object& object) {
         projectedVertices.push_back(Vector3D(screenX, screenY, 0));
     }
 
-    // Render the object faces (assuming triangles)
-    for (size_t i = 0; i < object.GetEdges().size(); i += 3) {
-        const auto& vertexA = projectedVertices[object.GetEdges()[i].first];
-        const auto& vertexB = projectedVertices[object.GetEdges()[i + 1].first];
-        const auto& vertexC = projectedVertices[object.GetEdges()[i + 2].first];
-
-        // Fill the triangle formed by vertexA, vertexB, and vertexC
-        FillTriangle(vertexA, vertexB, vertexC);
-    }
-}
-
-
-void Renderer::FillTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3) {
-    // Function to check if a point is inside the triangle
-    auto isInsideTriangle = [](int x, int y, const Vector3D& v1, const Vector3D& v2, const Vector3D& v3) -> bool {
-        float d1, d2, d3;
-        bool has_neg, has_pos;
-
-        d1 = (x - v2.x) * (v1.y - v2.y) - (v1.x - v2.x) * (y - v2.y);
-        d2 = (x - v3.x) * (v2.y - v3.y) - (v2.x - v3.x) * (y - v3.y);
-        d3 = (x - v1.x) * (v3.y - v1.y) - (v3.x - v1.x) * (y - v1.y);
-
-        has_neg = (d1 < 0) || (d2 < 0) || (d3 < 0);
-        has_pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
-
-        return !(has_neg && has_pos);
-    };
-
-    // Calculate bounding box of the triangle
-    int minX = std::min({v1.x, v2.x, v3.x});
-    int maxX = std::max({v1.x, v2.x, v3.x});
-    int minY = std::min({v1.y, v2.y, v3.y});
-    int maxY = std::max({v1.y, v2.y, v3.y});
-	
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set color to white
-
-    for (int y = minY; y <= maxY; y++) {
-        for (int x = minX; x <= maxX; x++) {
-            if (isInsideTriangle(x, y, v1, v2, v3)) {
-                SDL_RenderDrawPoint(renderer, x, y);
-            }
-        }
+    // Render the object edges
+    for (const auto& edge : object.GetEdges()) {
+        const auto& startVertex = projectedVertices[edge.first];
+        const auto& endVertex = projectedVertices[edge.second];
+        DrawLine(startVertex, endVertex);
     }
 }
