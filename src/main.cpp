@@ -1,7 +1,6 @@
 #include <SDL.h>
 #include "utils/Settings.h"
 #include "renderer/Renderer.h"
-#include "renderer/SceneRenderer.h"
 #include "utils/MathUtil.h"
 #include "utils/OBJLoader.h"
 #include <vector>
@@ -35,8 +34,7 @@ int main(int argc, char* args[]) {
 	cube.position.z = 10; 
 
 	// Create Renderers
-    Renderer renderer(sdlRenderer);
-	SceneRenderer sceneRenderer(renderer, camera);
+    Renderer renderer(sdlRenderer, camera);
 
 	Uint32 lastTime = SDL_GetTicks(), currentTime;
     float deltaTime;
@@ -88,7 +86,7 @@ int main(int argc, char* args[]) {
 		cube.rotation.x = counter * 100.0f;
 		cube.rotation.y = counter * 120.0f;
 		cube.rotation.z = counter * 140.0f;
-		sceneRenderer.RenderObject(cube);
+		renderer.RenderObject(cube);
 
         // Update the screen
 		SDL_SetRenderTarget(sdlRenderer, NULL);

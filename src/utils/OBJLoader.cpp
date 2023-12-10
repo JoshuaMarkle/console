@@ -9,11 +9,12 @@ Object OBJLoader::Load(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
     std::vector<Vector3D> vertices;
+	std::vector<Vector2D> uvs;
     std::vector<std::pair<int, int>> edges;
 
     if (!file.is_open()) {
         std::cout << "Error: File not found (" << filename << ")" << std::endl;
-        return Object(); // Return an empty object or handle the error as needed
+        return Object();
     }
 
     while (std::getline(file, line)) {
@@ -25,6 +26,10 @@ Object OBJLoader::Load(const std::string& filename) {
             float x, y, z;
             iss >> x >> y >> z;
             vertices.push_back(Vector3D(x, y, z));
+        } else if (prefix == "vt") {
+            float u, v;
+            iss >> u >> v;
+            uvs.push_back(Vector2D(u, v));
         } else if (prefix == "f") {
             std::string vertex;
             std::vector<int> faceVertices;
@@ -50,5 +55,5 @@ Object OBJLoader::Load(const std::string& filename) {
         }
     }
 
-    return Object(vertices, edges);
+    return Object(vertices, uvs, edges);
 }

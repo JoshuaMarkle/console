@@ -13,6 +13,10 @@ public:
     void Normalize();
     float Dot(const Vector3D& v) const;
     Vector3D Cross(const Vector3D& v) const;
+
+	Vector3D operator-(const Vector3D& other) const {
+        return Vector3D(x - other.x, y - other.y, z - other.z);
+    }
 };
 
 // Matrix4x4 class

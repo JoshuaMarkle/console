@@ -21,19 +21,20 @@ struct Vector3D {
         return Vector3D(x - other.x, y - other.y, z - other.z);
     }
 
-    Vector3D& operator+=(const Vector3D& other) {
-        x += other.x;
-        y += other.y;
-        z += other.z;
-        return *this;
-    }
-
     Vector3D operator/(float divisor) const {
         return Vector3D(x / divisor, y / divisor, z / divisor);
     }
 };
 
 void CenterPivot(const std::string& filepath) {
+}
+
+int main() {
+    std::string filepath;
+    std::cout << "Enter the path to the OBJ file: ";
+    std::cin >> filepath;
+
+	// Open the file
     std::ifstream file(filepath);
     if (!file.is_open()) {
         std::cerr << "Error: File not found (" << filepath << ")" << std::endl;
@@ -43,7 +44,6 @@ void CenterPivot(const std::string& filepath) {
     std::string line;
     std::vector<Vector3D> vertices;
     Vector3D center(0, 0, 0);
-    std::vector<std::string> otherLines;
 
     // Read vertices
     while (std::getline(file, line)) {
@@ -56,16 +56,12 @@ void CenterPivot(const std::string& filepath) {
             iss >> x >> y >> z;
             Vector3D vertex(x, y, z);
             vertices.push_back(vertex);
-            center += vertex;
-        } else {
-            otherLines.push_back(line);
+            center = center + vertex;
         }
     }
 
     // Calculate center of mass
-    if (!vertices.empty()) {
-        center = center / static_cast<float>(vertices.size());
-    }
+    center = center / static_cast<float>(vertices.size());
 
     // Shift vertices so that center of mass is at origin
     for (auto& vertex : vertices) {
@@ -89,21 +85,8 @@ void CenterPivot(const std::string& filepath) {
         outFile << "v " << vertex.x << " " << vertex.y << " " << vertex.z << "\n";
     }
 
-    // Write the other lines back to the OBJ file
-    for (const auto& line : otherLines) {
-        outFile << line << "\n";
-    }
-
     outFile.close();
     std::cout << "Centered OBJ file created: " << outputPath << std::endl;
-}
-
-int main() {
-    std::string filepath;
-    std::cout << "Enter the path to the OBJ file: ";
-    std::cin >> filepath;
-
-    CenterPivot(filepath);
 
     std::cout << "Program finished. Exiting..." << std::endl;
     return 0;
