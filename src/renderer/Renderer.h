@@ -2,9 +2,10 @@
 #define RENDERER_H
 
 #include <SDL.h>
+#include "../core/Object.h"
+#include "../core/Color.h"
+#include "../core/Settings.h"
 #include "../utils/MathUtil.h"
-#include "../utils/Object.h"
-#include "../utils/Settings.h"
 #include <algorithm>
 
 class Renderer {
@@ -16,7 +17,7 @@ public:
     void DrawLine(const Vector3D& start, const Vector3D& end);
     void RenderPresent();
 	void RenderObject(const Object& object);
-	void FillTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3);
+	void FillTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3, const Color& color);
 
 private:
     SDL_Renderer* renderer;

@@ -49,19 +49,34 @@ void Renderer::RenderObject(const Object& object) {
         projectedVertices.push_back(Vector3D(screenX, screenY, 0));
     }
 
-    // Render the object faces (assuming triangles)
-    for (size_t i = 0; i < object.GetEdges().size(); i += 3) {
+	// Create a Vector3D with the mainLight direction
+	Vector3D mainLight = Vector3D(1, 1, 0);
+	mainLight.Normalize();
+
+	for (size_t i = 0; i < object.GetEdges().size(); i += 3) {
         const auto& vertexA = projectedVertices[object.GetEdges()[i].first];
         const auto& vertexB = projectedVertices[object.GetEdges()[i + 1].first];
         const auto& vertexC = projectedVertices[object.GetEdges()[i + 2].first];
 
-        // Fill the triangle formed by vertexA, vertexB, and vertexC
-        FillTriangle(vertexA, vertexB, vertexC);
+        // Calculate normal of the triangle
+        Vector3D edge1 = vertexB - vertexA;
+        Vector3D edge2 = vertexC - vertexA;
+        Vector3D normal = edge1.Cross(edge2);
+
+        // Check if the triangle is facing the camera
+        Vector3D viewVector = vertexA - camera.position;
+        if (normal.Dot(viewVector) < 0) {
+        }
+
+		// Lighting
+		float intensity = std::max(normal.Dot(mainLight), 0.0f);
+		int c = static_cast<int>(255 * intensity);
+		FillTriangle(vertexA, vertexB, vertexC, Color(c, c, c));
     }
 }
 
 
-void Renderer::FillTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3) {
+void Renderer::FillTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3, const Color& color) {
     // Function to check if a point is inside the triangle
     auto isInsideTriangle = [](int x, int y, const Vector3D& v1, const Vector3D& v2, const Vector3D& v3) -> bool {
         float d1, d2, d3;
@@ -83,7 +98,7 @@ void Renderer::FillTriangle(const Vector3D& v1, const Vector3D& v2, const Vector
     int minY = std::min({v1.y, v2.y, v3.y});
     int maxY = std::max({v1.y, v2.y, v3.y});
 	
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set color to white
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255); // Set color to white
 
     for (int y = minY; y <= maxY; y++) {
         for (int x = minX; x <= maxX; x++) {

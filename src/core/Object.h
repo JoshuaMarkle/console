@@ -1,7 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "MathUtil.h"
+#include "../utils/MathUtil.h"
 #include <vector>
 #include <utility>
 

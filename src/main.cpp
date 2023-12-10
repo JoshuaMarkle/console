@@ -1,9 +1,10 @@
 #include <SDL.h>
-#include "utils/Settings.h"
+#include "core/Settings.h"
 #include "renderer/Renderer.h"
 #include "utils/MathUtil.h"
 #include "utils/OBJLoader.h"
 #include <vector>
+#include <iostream>
 
 int main(int argc, char* args[]) {
     // Initialize SDL and create a window and renderer
@@ -83,9 +84,9 @@ int main(int argc, char* args[]) {
         renderer.ClearScreen();
 
 		// Make the cube spin!
-		cube.rotation.x = counter * 100.0f;
-		cube.rotation.y = counter * 120.0f;
-		cube.rotation.z = counter * 140.0f;
+		// cube.rotation.x = counter * 100.0f;
+		// cube.rotation.y = counter * 120.0f;
+		// cube.rotation.z = counter * 140.0f;
 		renderer.RenderObject(cube);
 
         // Update the screen

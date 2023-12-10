@@ -1,7 +1,7 @@
 #ifndef OBJLOADER_H
 #define OBJLOADER_H
 
-#include "Object.h"
+#include "../core/Object.h"
 #include <string>
 
 class OBJLoader {
