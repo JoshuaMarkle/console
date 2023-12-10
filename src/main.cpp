@@ -31,8 +31,8 @@ int main(int argc, char* args[]) {
 	float cameraSpeed = 200.0f;
 
 	// Create cube
-	Object cube = OBJLoader::Load("assets/models/centered_cow.obj");
-	cube.position.z = 10; 
+	Object cube = OBJLoader::Load("assets/models/cube_tri.obj");
+	cube.position.z = -5; 
 
 	// Create Renderers
     Renderer renderer(sdlRenderer, camera);
@@ -84,9 +84,10 @@ int main(int argc, char* args[]) {
         renderer.ClearScreen();
 
 		// Make the cube spin!
-		// cube.rotation.x = counter * 100.0f;
-		// cube.rotation.y = counter * 120.0f;
-		// cube.rotation.z = counter * 140.0f;
+		float spinSpeed = 30;
+		cube.rotation.x = counter * spinSpeed;
+		cube.rotation.y = counter * spinSpeed * 2;
+		cube.rotation.z = counter * spinSpeed * 3;
 		renderer.RenderObject(cube);
 
         // Update the screen

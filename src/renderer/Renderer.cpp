@@ -27,7 +27,7 @@ void Renderer::RenderPresent() {
 
 void Renderer::RenderObject(const Object& object) {
     // Create a projection matrix
-    float fov = 100.0f;
+    float fov = 120.0f;
     float aspectRatio = static_cast<float>(Settings::NES_WIDTH) / Settings::NES_HEIGHT;
     Matrix4x4 projMatrix = CreateProjectionMatrix(fov, aspectRatio, 0.1f, 1000.0f);
 
@@ -49,30 +49,39 @@ void Renderer::RenderObject(const Object& object) {
         projectedVertices.push_back(Vector3D(screenX, screenY, 0));
     }
 
+    // Render the object edges
+    for (const auto& edge : object.GetEdges()) {
+        const auto& startVertex = projectedVertices[edge.first];
+        const auto& endVertex = projectedVertices[edge.second];
+        DrawLine(startVertex, endVertex);
+    }
+
 	// Create a Vector3D with the mainLight direction
-	Vector3D mainLight = Vector3D(1, 1, 0);
+	Vector3D mainLight = Vector3D(1, 1, 1);
 	mainLight.Normalize();
 
-	for (size_t i = 0; i < object.GetEdges().size(); i += 3) {
-        const auto& vertexA = projectedVertices[object.GetEdges()[i].first];
-        const auto& vertexB = projectedVertices[object.GetEdges()[i + 1].first];
-        const auto& vertexC = projectedVertices[object.GetEdges()[i + 2].first];
-
-        // Calculate normal of the triangle
-        Vector3D edge1 = vertexB - vertexA;
-        Vector3D edge2 = vertexC - vertexA;
-        Vector3D normal = edge1.Cross(edge2);
-
-        // Check if the triangle is facing the camera
-        Vector3D viewVector = vertexA - camera.position;
-        if (normal.Dot(viewVector) < 0) {
-        }
-
-		// Lighting
-		float intensity = std::max(normal.Dot(mainLight), 0.0f);
-		int c = static_cast<int>(255 * intensity);
-		FillTriangle(vertexA, vertexB, vertexC, Color(c, c, c));
-    }
+	// Draw faces (triangles) with lighting color
+	// for (size_t i = 0; i < object.GetEdges().size(); i += 3) {
+ //        const auto& vertexA = projectedVertices[object.GetEdges()[i].first];
+ //        const auto& vertexB = projectedVertices[object.GetEdges()[i + 1].first];
+ //        const auto& vertexC = projectedVertices[object.GetEdges()[i + 2].first];
+	//
+ //        // Calculate normal of the triangle
+ //        Vector3D edge1 = vertexB - vertexA;
+ //        Vector3D edge2 = vertexC - vertexA;
+ //        Vector3D normal = edge1.Cross(edge2);
+	//
+ //        // Check if the triangle is facing the camera
+ //        Vector3D viewVector = vertexA - camera.position;
+ //        if (normal.Dot(viewVector) > 0) {
+	// 		// Lighting
+	// 		float intensity = std::max(normal.Dot(mainLight), 0.0f);
+	// 		int c = static_cast<int>(255 * intensity);
+	// 		// c = 255;
+	// 		FillTriangle(vertexA, vertexB, vertexC, Color(c, c, c));
+ //        }
+	//
+ //    }
 }
 
 
